@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container, Title, Slogan } from './styles';
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { Realm, useApp } from '@realm/react'
 
 import backgroundImg from '../../assets/background.png'
 import { Button } from '../../components/Button';
@@ -15,25 +16,28 @@ GoogleSignin.configure({
 })
 
 export function SignIn() {
-  const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const [isAutenticating, setIsAuthenticanting] = useState(false)
+  const app = useApp()
 
   async function handleGoogleSignIn() {
     try {
-      setIsAuthenticating(true)
+      setIsAuthenticanting(true)
 
       const { idToken } = await GoogleSignin.signIn()
       
       if(idToken) {
+        const credentials = Realm.Credentials.jwt(idToken)
 
+        await app.logIn(credentials)
       } else {
         Alert.alert('Entrar', "Não foi possível conectar-se a sua conta google.")
-        setIsAuthenticating(false)  
+        setIsAuthenticanting(false)  
       }
 
     } catch (error) {
       console.log(error)
       Alert.alert('Entrar', "Não foi possível conectar-se a sua conta google.")
-      setIsAuthenticating(false)
+      setIsAuthenticanting(false)
     }
   }
 
@@ -45,7 +49,7 @@ export function SignIn() {
         Gestão de uso de veículos
       </Slogan>
 
-      <Button title='Entrar com Google' onPress={handleGoogleSignIn} />
+      <Button title='Entrar com Google' onPress={handleGoogleSignIn} isLoading={isAutenticating} />
     </Container>
   );
 }
