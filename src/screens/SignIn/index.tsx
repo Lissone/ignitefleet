@@ -16,12 +16,13 @@ GoogleSignin.configure({
 })
 
 export function SignIn() {
-  const [isAutenticating, setIsAuthenticanting] = useState(false)
   const app = useApp()
+
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
 
   async function handleGoogleSignIn() {
     try {
-      setIsAuthenticanting(true)
+      setIsAuthenticating(true)
 
       const { idToken } = await GoogleSignin.signIn()
       
@@ -31,13 +32,13 @@ export function SignIn() {
         await app.logIn(credentials)
       } else {
         Alert.alert('Entrar', "Não foi possível conectar-se a sua conta google.")
-        setIsAuthenticanting(false)  
+        setIsAuthenticating(false)  
       }
 
     } catch (error) {
       console.log(error)
       Alert.alert('Entrar', "Não foi possível conectar-se a sua conta google.")
-      setIsAuthenticanting(false)
+      setIsAuthenticating(false)
     }
   }
 
@@ -49,7 +50,7 @@ export function SignIn() {
         Gestão de uso de veículos
       </Slogan>
 
-      <Button title='Entrar com Google' onPress={handleGoogleSignIn} isLoading={isAutenticating} />
+      <Button title='Entrar com Google' onPress={handleGoogleSignIn} isLoading={isAuthenticating} />
     </Container>
   );
 }
