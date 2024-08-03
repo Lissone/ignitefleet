@@ -13,7 +13,7 @@ import { REALM_APP_ID } from '@env';
 
 import { SignIn } from './src/screens/SignIn';
 import { Loading } from './src/components/Loading';
-import { RealmProvider } from './src/libs/realm';
+import { RealmProvider, syncConfig } from './src/libs/realm';
 import { Routes } from './src/routes';
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
           />
 
           <UserProvider fallback={SignIn}>
-            <RealmProvider>
+            <RealmProvider sync={syncConfig} fallback={Loading}>
               <Routes />
             </RealmProvider>
           </UserProvider>

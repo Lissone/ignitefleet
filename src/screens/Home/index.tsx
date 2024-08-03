@@ -1,7 +1,8 @@
 
 import { Alert, FlatList } from 'react-native';
-import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { useUser } from '@realm/react';
 import dayjs from 'dayjs';
 
 import { useQuery, useRealm } from '../../libs/realm';
@@ -17,6 +18,7 @@ export function Home() {
   const { navigate } = useNavigation();
   const historic = useQuery(Historic)
   const realm = useRealm();
+  const user = useUser();
 
   const [vehicleInUse, setVehicleInUse] = useState<Historic | null>(null);
   const [vehicleHistoric, setVehicleHistoric] = useState<HistoricCardProps[]>([]);
@@ -77,7 +79,14 @@ export function Home() {
 
   useEffect(() => {
     fetchHistoric();
-  },[historic]);  
+  },[historic]);
+
+  useEffect(() => {
+    realm.subscriptions.update((mutableSubs, realm) => {
+      const historicByUserQuery = realm.objects('Historic').filtered(`user_id = '${user!.id}'`);
+      mutableSubs.add(historicByUserQuery, { name: 'historic_by_user' });
+    })
+  },[realm]);
 
   return (
     <Container>
