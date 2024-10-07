@@ -38,6 +38,8 @@ This project also marked my first experience using Realm (MongoDB Atlas) as a cl
 
 ## Demonstration
 
+https://github.com/user-attachments/assets/6c2442fd-788e-4c9f-8166-c8c28e57255d
+
 ## Requirements
 
 - [Nodejs](https://nodejs.org/en/)
