@@ -2,6 +2,7 @@
   "name": "ignite-fleet",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
+  "private": true,
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
@@ -45,6 +46,5 @@
     "@types/styled-components-react-native": "^5.2.5",
     "react-native-dotenv": "^3.4.11",
     "typescript": "5.3.3"
-  },
-  "private": true
+  }
 }
